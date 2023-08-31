@@ -1,18 +1,16 @@
 package org.example;
 
-import jdk.jfr.Name;
-
 import javax.persistence.*;
-import javax.persistence.GeneratedValue;
 
 @Entity
-@Table(name="produtos")
+@Table(name = "Produtos")
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="codigo_produto", nullable = false)
+    @Column(name = "codigo_produto")
     private int codigoProduto;
-    @Column(name="nome_produto", nullable = false)
+
+    @Column(name = "nome_produto", nullable = false)
     private String nomeProduto;
 
     public Produto() {

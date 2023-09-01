@@ -3,12 +3,12 @@ package org.example;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Produtos")
+@Table(name = "produtos")
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "codigo_produto")
-    private int codigoProduto;
+    @Column(name = "id_produto")
+    private int idProduto;
 
     @Column(name = "nome_produto", nullable = false)
     private String nomeProduto;
@@ -20,8 +20,12 @@ public class Produto {
         this.nomeProduto = nomeProduto;
     }
 
-    public int getCodigoProduto() {
-        return codigoProduto;
+    public int getIdProduto() {
+        return idProduto;
+    }
+
+    public void setIdProduto(int idProduto) {
+        this.idProduto = idProduto;
     }
 
     public String getNomeProduto() {
@@ -30,5 +34,10 @@ public class Produto {
 
     public void setNomeProduto(String nomeProduto) {
         this.nomeProduto = nomeProduto;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + idProduto + " | Nome: " + nomeProduto;
     }
 }

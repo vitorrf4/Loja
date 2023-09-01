@@ -1,18 +1,43 @@
 package org.example;
 
+import java.util.List;
+
 public class ProdutoLogic {
-    ProdutoView view = new ProdutoView();
     Database db = new Database();
 
     public void cadastrarProduto (Produto produto) {
-
+        db.persistirProduto(produto);
     }
 
-    public void movimentarProduto (MovimentoProduto movimento) {
-
+    public boolean movimentarProduto (MovimentoProduto movimento) {
+        if (db.consultarProduto(movimento.getProduto().getIdProduto()) == null ){
+            return false;
+        }
+        db.movimentarProduto(movimento);
+        return true;
     }
 
-    public void consultarProduto (int id) {
+    public Produto consultarProduto (int id) {
+        Produto prod = db.consultarProduto(id);
+
+        return prod;
+    }
+
+    public int calcularQntdProduto(int id) {
+//        Produto prod = db.consultarProduto(id);
+        List<MovimentoProduto> movimentos = db.consultarTodosMovimentos();
+        int qntdTotal = 0;
+
+        for (MovimentoProduto m : movimentos) {
+            if (m.getProduto().getIdProduto() == id) {
+                if (m.getTipoMovimento() == MovimentoProduto.Movimentos.ENTRADA) {
+                    qntdTotal += m.getQuantidadeMovimento();
+                } else {
+                    qntdTotal -= m.getQuantidadeMovimento();
+                }
+            }
+        }
+        return qntdTotal;
 
     }
 }

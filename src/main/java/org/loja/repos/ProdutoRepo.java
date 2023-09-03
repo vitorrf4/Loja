@@ -6,9 +6,10 @@ import org.loja.classes.Produto;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 import java.util.List;
 
-public class Database {
+public class ProdutoRepo {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("loja");
     EntityManager em = emf.createEntityManager();
 
@@ -17,7 +18,7 @@ public class Database {
             em.getTransaction().begin();
             em.persist(produto);
             em.getTransaction().commit();
-        } catch (Exception e) {
+        } catch (IllegalArgumentException | PersistenceException e) {
             em.getTransaction().rollback();
             throw e;
         }
@@ -28,7 +29,7 @@ public class Database {
             em.getTransaction().begin();
             em.persist(movimento);
             em.getTransaction().commit();
-        } catch (Exception e) {
+        } catch (IllegalArgumentException | PersistenceException e) {
             em.getTransaction().rollback();
             throw e;
         }

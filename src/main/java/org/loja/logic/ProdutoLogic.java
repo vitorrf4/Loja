@@ -1,4 +1,8 @@
-package org.example;
+package org.loja.logic;
+
+import org.loja.classes.MovimentoProduto;
+import org.loja.classes.Produto;
+import org.loja.repos.Database;
 
 import java.util.List;
 
@@ -13,7 +17,7 @@ public class ProdutoLogic {
         if (db.consultarProduto(movimento.getProduto().getIdProduto()) == null ){
             return false;
         }
-        db.movimentarProduto(movimento);
+        db.persistirMovimento(movimento);
         return true;
     }
 

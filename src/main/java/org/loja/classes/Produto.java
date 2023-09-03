@@ -1,4 +1,4 @@
-package org.example;
+package org.loja.classes;
 
 import javax.persistence.*;
 

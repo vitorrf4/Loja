@@ -1,4 +1,7 @@
-package org.example;
+package org.loja.repos;
+
+import org.loja.classes.MovimentoProduto;
+import org.loja.classes.Produto;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -9,7 +12,7 @@ public class Database {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("loja");
     EntityManager em = emf.createEntityManager();
 
-    public boolean persistirProduto(Produto produto) {
+    public void persistirProduto(Produto produto) {
         try {
             em.getTransaction().begin();
             em.persist(produto);
@@ -18,10 +21,9 @@ public class Database {
             em.getTransaction().rollback();
             throw e;
         }
-        return true;
     }
 
-    public boolean movimentarProduto(MovimentoProduto movimento) {
+    public void persistirMovimento(MovimentoProduto movimento) {
         try {
             em.getTransaction().begin();
             em.persist(movimento);
@@ -30,7 +32,6 @@ public class Database {
             em.getTransaction().rollback();
             throw e;
         }
-        return true;
     }
 
     public Produto consultarProduto(int id) {

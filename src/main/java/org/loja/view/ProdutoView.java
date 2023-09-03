@@ -1,6 +1,10 @@
-package org.example;
+package org.loja.view;
 
 import org.apache.commons.lang3.StringUtils;
+import org.loja.classes.MovimentoProduto;
+import org.loja.classes.Produto;
+import org.loja.logic.ProdutoLogic;
+
 import java.util.Scanner;
 
 public class ProdutoView {

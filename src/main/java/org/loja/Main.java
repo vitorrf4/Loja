@@ -1,5 +1,6 @@
-package org.example;
-import java.util.Scanner;
+package org.loja;
+
+import org.loja.view.ProdutoView;
 
 public class Main {
     public static void main(String[] args) {

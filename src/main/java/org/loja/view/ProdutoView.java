@@ -99,7 +99,7 @@ public class ProdutoView {
         if (logic.movimentarProduto(movimento))
             System.out.println("Produto movimentado!");
         else
-            System.out.println("Produto não encontrado");
+            System.out.println("Erro, movimento deixará o produto com um valor negativo");
     }
 
     public void mostrarConsultar() {

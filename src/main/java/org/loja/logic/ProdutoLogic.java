@@ -21,12 +21,24 @@ public class ProdutoLogic {
     }
 
     public boolean movimentarProduto (MovimentoProduto movimento) {
-        // TODO: Validar saida menor que 0
+        int qntd = calcularQntdProduto(movimento.getProduto().getIdProduto());
+
+        if (movimento.getTipoMovimento() == MovimentoProduto.Movimentos.ENTRADA)
+            qntd += movimento.getQuantidadeMovimento();
+        else
+            qntd -= movimento.getQuantidadeMovimento();
+
+        System.out.println("quantidade: " + qntd);
+
+        if (qntd < 0)
+            return false;
+
+
         try {
             db.persistirMovimento(movimento);
             return true;
         } catch (IllegalArgumentException | PersistenceException e) {
-            return false;
+            throw e;
         }
     }
 

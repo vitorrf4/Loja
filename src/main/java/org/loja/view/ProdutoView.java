@@ -54,9 +54,28 @@ public class ProdutoView {
     }
 
     public void mostrarMovimentar() {
-        String codigo, quantidade, tipoRecebido;
+        Produto prod = procurarProduto();
+
+        if (prod == null) {
+            System.out.println("Produto não encontrado");
+            return;
+        }
+
+        MovimentoProduto.Movimentos tipoMovimento = receberTipoMovimento();
+
+        int quantidade = receberQuantidadeMovimento();
+
+        MovimentoProduto movimento = new MovimentoProduto(prod, quantidade, tipoMovimento);
+
+        if (logic.movimentarProduto(movimento))
+            System.out.println("Produto movimentado!");
+        else
+            System.out.println("Erro, movimento deixará o produto com um valor negativo");
+    }
+
+    public Produto procurarProduto() {
+        String codigo;
         Produto prod = null;
-        MovimentoProduto.Movimentos tipoMovimento = null;
 
         do {
             System.out.print("Digite o codigo do produto: ");
@@ -68,23 +87,31 @@ public class ProdutoView {
             }
 
             prod = logic.consultarProduto(Integer.parseInt(codigo));
-
-            if (prod == null) {
-                System.out.println("Produto não encontrado");
-                return;
-            }
         } while (numeroEstaInvalido(codigo));
+
+        return prod;
+    }
+
+    public MovimentoProduto.Movimentos receberTipoMovimento() {
+        String tipoRecebido;
+        MovimentoProduto.Movimentos tipoMovimento = null;
 
         do {
             System.out.println("Digite 0 para remover e 1 para adicionar:");
             tipoRecebido = entrada.nextLine();
 
             switch (tipoRecebido) {
-                case "0" -> { tipoMovimento = MovimentoProduto.Movimentos.SAIDA; }
-                case "1" -> { tipoMovimento = MovimentoProduto.Movimentos.ENTRADA; }
-                default -> { System.out.println("Entrada inválida"); }
+                case "0" -> tipoMovimento = MovimentoProduto.Movimentos.SAIDA;
+                case "1" -> tipoMovimento = MovimentoProduto.Movimentos.ENTRADA;
+                default -> System.out.println("Entrada inválida");
             }
         } while (!(tipoRecebido.equals("0") || tipoRecebido.equals("1")));
+
+        return tipoMovimento;
+    }
+
+    public int receberQuantidadeMovimento() {
+        String quantidade;
 
         do {
             System.out.print("Digite a quantidade a ser movimentada: ");
@@ -94,26 +121,11 @@ public class ProdutoView {
                 System.out.println("Entrada inválida");
         } while (numeroEstaInvalido(quantidade));
 
-        MovimentoProduto movimento = new MovimentoProduto(prod, Integer.parseInt(quantidade), tipoMovimento);
-
-        if (logic.movimentarProduto(movimento))
-            System.out.println("Produto movimentado!");
-        else
-            System.out.println("Erro, movimento deixará o produto com um valor negativo");
+        return Integer.parseInt(quantidade);
     }
 
     public void mostrarConsultar() {
-        String codigo;
-
-        do {
-            System.out.println("Digite o codigo do Produto: ");
-            codigo = entrada.nextLine();
-
-            if (numeroEstaInvalido(codigo))
-                System.out.println("Entrada inválida");
-        } while (numeroEstaInvalido(codigo));
-
-        Produto prod = logic.consultarProduto(Integer.parseInt(codigo));
+        Produto prod = procurarProduto();
 
         if (prod == null)
             System.out.println("Produto não encontrado");

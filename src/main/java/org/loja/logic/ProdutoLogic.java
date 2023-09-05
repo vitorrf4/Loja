@@ -21,12 +21,16 @@ public class ProdutoLogic {
     }
 
     public boolean movimentarProduto (MovimentoProduto movimento) {
+        // Calcula a quantidade atual do produto
         int qntd = calcularQntdProduto(movimento.getProduto().getIdProduto());
 
-        if (movimento.getTipoMovimento() == MovimentoProduto.Movimentos.ENTRADA)
+        // Calcula quantidade de produtos que terá depois da movimentação
+        if (movimento.getTipoMovimento() == MovimentoProduto.Movimentos.ENTRADA) {
             qntd += movimento.getQuantidadeMovimento();
-        else
+        } else {
             qntd -= movimento.getQuantidadeMovimento();
+        }
+
 
         if (qntd < 0)
             return false;
@@ -47,6 +51,7 @@ public class ProdutoLogic {
     public int calcularQntdProduto(int id) {
         List<MovimentoProduto> movimentos = db.consultarTodosMovimentos();
 
+        //Filtra a lista pra somente movimentos do produto com o id enviado
         movimentos = movimentos.stream().filter(m -> m.getProduto().getIdProduto() == id).toList();
 
         int qntdTotal = 0;

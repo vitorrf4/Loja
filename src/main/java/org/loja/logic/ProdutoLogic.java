@@ -28,8 +28,6 @@ public class ProdutoLogic {
         else
             qntd -= movimento.getQuantidadeMovimento();
 
-        System.out.println("quantidade: " + qntd);
-
         if (qntd < 0)
             return false;
 

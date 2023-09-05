@@ -19,6 +19,7 @@ public class ProdutoView {
                         1 - Cadastrar produto
                         2 - Movimentar produto
                         3 - Consultar produto
+                        4 - Listar todos os produtos
                         0 - Sair
                     """
             );
@@ -28,6 +29,7 @@ public class ProdutoView {
                 case "1" -> mostrarCadastrar();
                 case "2" -> mostrarMovimentar();
                 case "3" -> mostrarConsultar();
+                case "4" -> logic.listarProdutosCompleto();
                 case "0" -> { break Menu; }
                 default -> System.out.println("Opção inválida");
             }
@@ -47,10 +49,11 @@ public class ProdutoView {
 
         Produto produto = new Produto(nome);
 
-        if (logic.cadastrarProduto(produto))
+        if (logic.cadastrarProduto(produto)) {
             System.out.println("Produto cadastrado com sucesso");
-        else
+        } else {
             System.out.println("Erro, transação mal-sucedida");
+        }
     }
 
     public void mostrarMovimentar() {

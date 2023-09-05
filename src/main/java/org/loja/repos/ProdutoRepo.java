@@ -42,4 +42,8 @@ public class ProdutoRepo {
     public List consultarTodosMovimentos() {
         return em.createQuery("from MovimentoProduto").getResultList();
     }
+
+    public List consultarTodosProdutos() {
+        return em.createQuery("from Produto").getResultList();
+    }
 }

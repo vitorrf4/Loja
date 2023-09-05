@@ -14,6 +14,7 @@ public class ProdutoLogic {
     public boolean cadastrarProduto(Produto produto) {
         try {
             db.persistirProduto(produto);
+            listarProdutos();
             return true;
         } catch (IllegalArgumentException | PersistenceException e) {
             return false;
@@ -64,5 +65,26 @@ public class ProdutoLogic {
         }
 
         return qntdTotal;
+    }
+
+    public void listarProdutos() {
+        List<Produto> produtos = db.consultarTodosProdutos();
+
+        for (Produto m : produtos) {
+            System.out.println( m.toString() );
+        }
+
+    }
+
+
+    public void listarProdutosCompleto() {
+        List<Produto> produtos = db.consultarTodosProdutos();
+
+        for (Produto m : produtos) {
+            System.out.println( m.toString() +
+                    " | Qtde: " +
+                    calcularQntdProduto(m.getIdProduto()));
+        }
+
     }
 }

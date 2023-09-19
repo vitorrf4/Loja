@@ -5,6 +5,7 @@ import org.loja.classes.MovimentoProduto;
 import org.loja.classes.Produto;
 import org.loja.logic.ProdutoLogic;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ProdutoView {
@@ -29,7 +30,7 @@ public class ProdutoView {
                 case "1" -> mostrarCadastrar();
                 case "2" -> mostrarMovimentar();
                 case "3" -> mostrarConsultar();
-                case "4" -> logic.listarProdutosCompleto();
+                case "4" -> mostrarTodosProdutosComQntd();
                 case "0" -> { break Menu; }
                 default -> System.out.println("Opção inválida");
             }
@@ -50,6 +51,7 @@ public class ProdutoView {
         Produto produto = new Produto(nome);
 
         if (logic.cadastrarProduto(produto)) {
+            mostrarTodosProdutos();
             System.out.println("Produto cadastrado com sucesso");
         } else {
             System.out.println("Erro, transação mal-sucedida");
@@ -135,6 +137,29 @@ public class ProdutoView {
         else {
             int qntd = logic.calcularQntdProduto(prod.getIdProduto());
             System.out.println("Produto: " + prod.getNomeProduto() + " | Quantidade: " + qntd);
+        }
+    }
+
+    public void mostrarTodosProdutos() {
+        List<Produto> produtos = logic.listarProdutos();
+
+        for (Produto p : produtos) {
+            System.out.println(p);
+        }
+    }
+
+    public void mostrarTodosProdutosComQntd() {
+        List<Produto> produtos = logic.listarProdutos();
+
+        if (produtos.isEmpty()) {
+            System.out.println("Nenhum produto cadastrado");
+            return;
+        }
+
+        for (Produto m : produtos) {
+            System.out.println( m.toString() +
+                    " | Qtde: " +
+                    logic.calcularQntdProduto(m.getIdProduto()));
         }
     }
 
